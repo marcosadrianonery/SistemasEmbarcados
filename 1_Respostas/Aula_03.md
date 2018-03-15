@@ -93,38 +93,77 @@ Qual é o seu nome? Olá Ola.
 $ ./ola_usuario_2 Eu
 $ Ola Eu
 ```
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char **argv)
+{
+	printf("Olá, %s. \n", argv[1]);
+	return 0;
+}
+```
 
 5. Apresente os comportamentos do código anterior nos seguintes casos:
 
 (a) Se o usuário insere mais de um nome.
 ```bash
 $ ./ola_usuario_2 Eu Mesmo
+
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ ./reciprocal Marcos Adriano
+Olá, Marcos. 
 ```
 
 (b) Se o usuário insere mais de um nome entre aspas duplas. Por exemplo:
 ```bash
 $ ./ola_usuario_2 "Eu Mesmo"
+
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ ./reciprocal "Marcos Adriano"
+Olá, Marcos Adriano. 
 ```
 
 (c) Se é usado um pipe. Por exemplo:
 ```bash
 $ echo Eu | ./ola_usuario_2
+
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ echo Marcos | ./reciprocal
+Olá, (null).
+
 ```
 
 (d) Se é usado um pipe com mais de um nome. Por exemplo:
 ```bash
 $ echo Eu Mesmo | ./ola_usuario_2
+
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ echo Marcos Adriano | ./reciprocal
+Olá, (null). 
+
 ```
 
 (e) Se é usado um pipe com mais de um nome entre aspas duplas. Por exemplo:
 ```bash
 $ echo Eu Mesmo | ./ola_usuario_2
+
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ echo "Marcos Adriano |" ./reciprocal
+Marcos Adriano | ./reciprocal
+
 ```
 
 (f) Se é usado o redirecionamento de arquivo. Por exemplo:
 ```bash
 $ echo Ola mundo cruel! > ola.txt
 $ ./ola_usuario_2 < ola.txt
+
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ echo Ola mundo cruel! > ola.txt
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/CODIGO_Arg
+umento_ArgcEargv$ ./reciprocal < ola.txt
+Olá, (null). 
 ```
 
 6. Crie um código em C que faz o mesmo que o código da questão 4, e em seguida imprime no terminal quantos valores de entrada foram fornecidos pelo usuário. Por exemplo, considerando que o código criado recebeu o nome de 'ola_usuario_3':
@@ -134,7 +173,26 @@ $ ./ola_usuario_3 Eu
 $ Ola Eu
 $ Numero de entradas = 2
 ```
+```C
+#include <stdio.h>
+#include <stdlib.h>
 
+int main(int argc, char **argv)
+{
+	printf("Olá, %s. \n", argv[1]);
+	printf("Numero de entradas =  %d.", argc);
+	return 0;
+}
+
+```
+
+```bash
+### Saida
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/Questão_0
+6$ ./reciprocal Marcos
+Olá, Marcos. 
+Numero de entradas =  2.
+```
 7. Crie um código em C que imprime todos os argumentos de entrada fornecidos pelo usuário. Por exemplo, considerando que o código criado recebeu o nome de 'ola_argumentos':
 
 ```bash
