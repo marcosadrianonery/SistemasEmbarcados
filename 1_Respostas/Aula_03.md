@@ -200,8 +200,63 @@ $ ./ola_argumentos Eu Mesmo e Minha Pessoa
 $ Argumentos: Eu Mesmo e Minha Pessoa
 ```
 
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char **argv)
+{
+	int n=1;
+
+	printf("Argumentos: ");	
+	for(1; n < argc; n++)
+	{
+	printf("%s ", argv[n]);
+	}
+	return 0;
+}221
+```
+
+
 8. Crie uma função que retorna a quantidade de caracteres em uma string, usando o seguinte protótipo:
 `int Num_Caracs(char *string);` Salve-a em um arquivo separado chamado 'num_caracs.c'. Salve o protótipo em um arquivo chamado 'num_caracs.h'. Compile 'num_caracs.c' para gerar o objeto 'num_caracs.o'.
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include "num_caracs.h"
+
+int main(int argc, char **argv)
+{
+	int tamanho;
+	char numero[100];
+	gets(numero);
+	tamanho = Num_Caracs(numero);
+	printf("Tamanho: %d ", tamanho);
+	return 0;
+}
+
+//num_caracs.h
+int Num_Caracs(char *string);
+
+//num_caracs.c
+#include "num_caracs.h"
+
+int Num_Caracs(char *string)
+{
+	int tamanho;	
+	tamanho = strlen(string);
+	return tamanho;
+}
+
+
+```
+```bash
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/Ques
+tão_08$ ./num_caracs
+Marcos
+Tamanho: 6
+```
 
 9. Re-utilize o objeto criado na questão 8 para criar um código que imprime cada argumento de entrada e a quantidade de caracteres de cada um desses argumentos. Por exemplo, considerando que o código criado recebeu o nome de 'ola_num_caracs_1':
 
@@ -211,7 +266,60 @@ $ Argumento: ./ola_num_caracs_1 / Numero de caracteres: 18
 $ Argumento: Eu / Numero de caracteres: 2
 $ Argumento: Mesmo / Numero de caracteres: 5
 ```
+```bash
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/Questão_0
+9$ ./num_caracs
+Marcos Adriano Nery de Abrantes
+Argumento: Marcos / Numero de caracteres: 6.
+Argumento: Adriano / Numero de caracteres: 7.
+Argumento: Nery / Numero de caracteres: 4.
+Argumento: de / Numero de caracteres: 2.
+Argumento: Abrantes / Numero de caracteres: 8.
+```
 
+```C
+// MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include "num_caracs.h"
+
+int main(int argc, char **argv)
+{
+	char numero[100];
+	gets(numero);	
+	Num_Caracs(numero);
+	return 0;
+}
+
+// NUM_CARACS.c
+#include "num_caracs.h"
+
+int Num_Caracs(char *string)
+{
+	int tamanho = 0, tamanho_total, aux = 0, n;
+	char temporaria[50];	
+	tamanho_total = strlen(string);
+	
+	for (n = 0; n <= tamanho_total ; n++)
+	{		
+	
+		temporaria[aux] = string[n];	
+	
+			if((string[n] == ' ') || (string[n] == '\n')|| (n == tamanho_total)) {
+			temporaria[aux] = '\0';
+			tamanho = strlen(temporaria);
+			printf("Argumento: %s / Numero de caracteres: %d.\n", temporaria, tamanho);
+			aux = -1;
+			}
+		aux++;
+	}
+	return 0;
+}
+
+//NUM_CARACS.h
+int Num_Caracs(char *string);
+
+```
 10. Crie um Makefile para a questão anterior.
 
 11. Re-utilize o objeto criado na questão 8 para criar um código que imprime o total de caracteres nos argumentos de entrada. Por exemplo, considerando que o código criado recebeu o nome de 'ola_num_caracs_2':
