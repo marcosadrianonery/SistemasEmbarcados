@@ -128,8 +128,65 @@ int tam_arq_texto(char *nome_arquivo)
 ```
 
 5. Crie uma função que lê o conteúdo de um arquivo-texto e o guarda em uma string, usando o seguinte protótipo: `void le_arq_texto(char *nome_arquivo, char *conteudo);` Repare que o conteúdo do arquivo é armazenado no vetor `conteudo[]`. Ou seja, ele é passado por referência. Salve esta função no mesmo arquivo da questão 4, chamado 'bib_arqs.c'. Salve o protótipo no arquivo 'bib_arqs.h'. Compile 'bib_arqs.c' novamente para gerar o objeto 'bib_arqs.o'.
+```bash
+//TEXTO_ARQUIVO
+Marcos Adriano
 
+//Terminal
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_04/05$ ./bib_arqs 
+Conteudo: Marcos Adriano
+```
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include "bib_arqs.h"
 
+int main(int argc, const char * argv[]) {
+
+	char nome_arquivo[] = "Nome.txt", conteudo[100];
+	le_arq_texto(nome_arquivo, conteudo);
+	tam_arq_texto(nome_arquivo);	
+	printf("Conteudo: %s \n", conteudo);
+	return 0;
+}
+
+//bib_arqs.h
+int tam_arq_texto(char *nome_arquivo);
+void le_arq_texto(char *nome_arquivo, char *conteudo);
+
+//bib_arqs.c
+#include "bib_arqs.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+int tam_arq_texto(char *nome_arquivo)
+{
+
+	int tamanho = -1;
+	char c;
+	FILE *fp;
+	fp = fopen (nome_arquivo,"r");
+	while((c = getc(fp) ) != EOF) tamanho++;
+	fclose(fp);
+	return tamanho;
+}
+
+void le_arq_texto(char *nome_arquivo, char *conteudo)
+{
+	int tamanho = 0;
+	char c;
+	FILE *fp;
+	fp = fopen (nome_arquivo,"r");
+	while((c = getc(fp) ) != EOF){
+	conteudo[tamanho] = c;	
+	tamanho++;
+		
+	}	
+	fclose(fp);
+}
+
+```
 
 
 6. Crie um código em C que copia a funcionalidade básica do comando `cat`: escrever o conteúdo de um arquivo-texto no terminal. Reaproveite as funções já criadas nas questões anteriores. Por exemplo, considerando que o código criado recebeu o nome de 'cat_falsificado':
@@ -138,7 +195,25 @@ int tam_arq_texto(char *nome_arquivo)
 $ echo Ola mundo cruel! Ola universo ingrato! > ola.txt
 $ ./cat_falsificado ola.txt
 $ Ola mundo cruel! Ola universo ingrato!
+
+A QUESTÃO 5 FAZ EXATAMENTE ISSO.
+
+//MAIN_COPIADA
+#include <stdio.h>
+#include <stdlib.h>
+#include "bib_arqs.h"
+
+int main(int argc, const char * argv[]) {
+
+	char nome_arquivo[] = "Nome.txt", conteudo[100];
+	le_arq_texto(nome_arquivo, conteudo);
+	tam_arq_texto(nome_arquivo);	
+	printf("Conteudo: %s \n", conteudo);
+	return 0;
+}
+
 ```
+
 
 7. Crie um código em C que conta a ocorrência de uma palavra-chave em um arquivo-texto, e escreve o resultado no terminal. Reaproveite as funções já criadas nas questões anteriores. Por exemplo, considerando que o código criado recebeu o nome de 'busca_e_conta':
 
