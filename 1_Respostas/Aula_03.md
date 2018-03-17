@@ -321,6 +321,16 @@ int Num_Caracs(char *string);
 
 ```
 10. Crie um Makefile para a questão anterior.
+```bash
+reciprocal: main.o num_caracs.o
+	gcc $(CFLAGS) -o num_caracs main.o num_caracs.o
+main.o: main.c num_caracs.h
+	gcc $(CFLAGS) -c main.c
+reciprocal.o: num_caracs.c num_caracs.h
+	gcc $(CFLAGS) -c num_caracs.c
+clean:
+	rm -f *.o num_caracs
+```
 
 11. Re-utilize o objeto criado na questão 8 para criar um código que imprime o total de caracteres nos argumentos de entrada. Por exemplo, considerando que o código criado recebeu o nome de 'ola_num_caracs_2':
 
@@ -328,5 +338,37 @@ int Num_Caracs(char *string);
 $ ./ola_num_caracs_2 Eu Mesmo
 $ Total de caracteres de entrada: 25
 ```
+```bash
+drico@drico-VirtualBox:~/Área de Trabalho/Sistemas_Embarcados/Aula_03/Questão_1
+1$ ./num_caracs Marcos Adriano             Nery
+Tamanho: 29
+```
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include "num_caracs.h"
 
+int main(int argc, char **argv)
+{
+	int n, tamanho_arg, tamanho_arg_2;
+	for(n=0; n<argc; n++){
+	tamanho_arg = tamanho_arg + Num_Caracs(argv[n]);
+	}
+	printf("Tamanho: %d ", tamanho_arg );
+	return 0;
+}
+
+```
 12. Crie um Makefile para a questão anterior.
+```bash
+reciprocal: main.o num_caracs.o
+	gcc $(CFLAGS) -o num_caracs main.o num_caracs.o
+main.o: main.c num_caracs.h
+	gcc $(CFLAGS) -c main.c
+reciprocal.o: num_caracs.c num_caracs.h
+	gcc $(CFLAGS) -c num_caracs.c
+clean:
+	rm -f *.o num_caracs
+```
+
