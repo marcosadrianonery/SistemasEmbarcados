@@ -68,5 +68,6 @@ off_t lseek(int fd, off_t offset, int whence);
 ```
 
 (e) Quais bibliotecas devem ser incluídas no código para poder utilizar as funções acima?  
-As bibliotecas que devem ser incluídas para a utilização das funçoes supracitadas
-são *sys/types.h*, *sys/stat.h*, *fcntl.h* e *unistd.h*.
+```C
+As bibliotecas são <sys/types.h>, <sys/stat.h>, <fcntl.h> e <unistd.h>.
+```
