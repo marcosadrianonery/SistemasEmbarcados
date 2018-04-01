@@ -152,7 +152,7 @@ int tam_arq_texto(char *nome_arquivo)
 	}
     tamanho = lseek(descritor, 0, SEEK_END);
 	close(descritor);
-	return (tamanho - 2);
+	return (tamanho - 1);
 }
 
 
@@ -163,6 +163,88 @@ int tam_arq_texto(char *nome_arquivo)
 
 
 5. Crie uma função que lê o conteúdo de um arquivo-texto e o guarda em uma string, usando o seguinte protótipo: `void le_arq_texto(char *nome_arquivo, char *conteúdo);` Repare que o conteúdo do arquivo é armazenado no vetor `conteudo[]`. Ou seja, ele é passado por referência. Salve esta função no mesmo arquivo da questão 4, chamado 'bib_arqs.c'. Salve o protótipo no arquivo 'bib_arqs.h'. Compile 'bib_arqs.c' novamente para gerar o objeto 'bib_arqs.o'.
+```bash
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_5# ./bib_arqs
+Marcos adriano 
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_5# cat arquivo.txt 
+Marcos adriano
+```
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+#include "bib_arqs.h"
+
+int main(int argc, const char * argv[]) {
+    char nome[] = "arquivo.txt", conteudo[100];
+    int tamanho;
+    tamanho = tam_arq_texto(nome);    
+    le_arq_texto(nome, conteudo);
+    printf("%s \n", conteudo);
+	return 0;
+}
+
+//bib_arqs.c
+#include "bib_arqs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+
+
+int tam_arq_texto(char *nome_arquivo)
+{
+	int tamanho = -1, descritor, n_byte;
+	char c;
+	descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+    
+    if (descritor < 0)
+   {
+      perror (nome_arquivo);
+      return -1;
+   }
+    tamanho = lseek(descritor, 0, SEEK_END);
+	close(descritor);
+	return (tamanho - 1);
+}
+
+void le_arq_texto(char *nome_arquivo, char *conteudo)
+{
+    
+	int tamanho = 0, n_byte, descritor;
+	char c;
+    
+	tamanho = tam_arq_texto(nome_arquivo);
+    
+    descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+     
+        if (descritor < 0){
+            
+            perror (nome_arquivo);
+            return;
+        }
+    
+       /* deve-se passar sempre o endereço de memória da variável que vai receber os bytes lidos */
+   n_byte = read (descritor, conteudo, tamanho*sizeof(char));
+ 
+   if (n_byte < 0)
+   {
+      perror (nome_arquivo);
+      return;
+   }
+	close(descritor);
+}
+
+//bib_arqs.h
+int tam_arq_texto(char *nome_arquivo);
+void le_arq_texto(char *nome_arquivo, char *conteudo);
+```
 
 6. Crie um código em C que copia a funcionalidade básica do comando `cat`: escrever o conteúdo de um arquivo-texto no terminal. Reaproveite as funções já criadas nas questões anteriores. Por exemplo, considerando que o código criado recebeu o nome de 'cat_falsificado':
 
@@ -170,7 +252,88 @@ int tam_arq_texto(char *nome_arquivo)
 $ echo Ola mundo cruel! Ola universo ingrato! > ola.txt
 $ ./cat_falsificado ola.txt
 $ Ola mundo cruel! Ola universo ingrato!
+
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_6# ./bib_arqs marcos.txt
+Marcos Adriano 
 ```
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+#include "bib_arqs.h"
+
+int main(int argc, const char * argv[]) {
+    char nome[] = "arquivo.txt", conteudo[100];
+    strcpy(nome,argv[1]);
+    int tamanho;
+    tamanho = tam_arq_texto(nome);    
+    le_arq_texto(nome, conteudo);
+    printf("%s \n", conteudo);
+	return 0;
+}
+
+//bib_arqs.c
+#include "bib_arqs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+
+
+int tam_arq_texto(char *nome_arquivo)
+{
+	int tamanho = -1, descritor, n_byte;
+	char c;
+	descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+    
+    if (descritor < 0)
+   {
+      perror (nome_arquivo);
+      return -1;
+   }
+    tamanho = lseek(descritor, 0, SEEK_END);
+	close(descritor);
+	return (tamanho - 1);
+}
+
+void le_arq_texto(char *nome_arquivo, char *conteudo)
+{
+    
+	int tamanho = 0, n_byte, descritor;
+	char c;
+    
+	tamanho = tam_arq_texto(nome_arquivo);
+    
+    descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+     
+        if (descritor < 0){
+            
+            perror (nome_arquivo);
+            return;
+        }
+    
+       /* deve-se passar sempre o endereço de memória da variável que vai receber os bytes lidos */
+   n_byte = read (descritor, conteudo, tamanho*sizeof(char));
+ 
+   if (n_byte < 0)
+   {
+      perror (nome_arquivo);
+      return;
+   }
+	close(descritor);
+}
+
+//bib_arqs.h
+int tam_arq_texto(char *nome_arquivo);
+void le_arq_texto(char *nome_arquivo, char *conteudo);
+```
+
 
 7. Crie um código em C que conta a ocorrência de uma palavra-chave em um arquivo-texto, e escreve o resultado no terminal. Reaproveite as funções já criadas nas questões anteriores. Por exemplo, considerando que o código criado recebeu o nome de 'busca_e_conta':
 
