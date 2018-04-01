@@ -347,7 +347,6 @@ root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_7# 
 Iguais: 2 
 
 ```
-
 ```C
 //MAIN
 #include <stdio.h>
@@ -370,7 +369,8 @@ int main(int argc, const char * argv[]) {
     
     for(n = 0; n <= tamanho_texto; n++)
     {       
-            if((conteudo[n] == ' ') || (conteudo[n] == 'EOF') || (n == tamanho_texto) || (conteudo[n] == '.') || (conteudo[n] == ','))
+            if((conteudo[n] == ' ') || (conteudo[n] == 'EOF') || (n == tamanho_texto) 
+	    || (conteudo[n] == '.') || (conteudo[n] == ','))
             {
                 for(i = 0; i < tamanho_palavra; i++)
                 {
