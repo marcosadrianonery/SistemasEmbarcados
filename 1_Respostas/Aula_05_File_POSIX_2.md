@@ -1,6 +1,24 @@
 Para todas as questões, utilize as funções da norma POSIX (`open()`, `close()`, `write()`, `read()` e `lseek()`). Compile os códigos com o gcc e execute-os via terminal.
 
-1. Crie um código em C para escrever "Ola mundo!" em um arquivo chamado 'ola_mundo.txt'.
+1. Crie um código em C para escrever "Ola mundo!" em um arquivo chamado 'ola_mundo.txt'.]
+```C
+#include <stdio.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+
+int main(int argc, const char * argv[]) {
+
+	char nome_arquivo[] = "Ola_mundo.txt", string_[] = "Ola mundo!" ;
+	int descritor, n_bytes;
+    
+	descritor = open(nome_arquivo, O_WRONLY | O_CREAT);
+	n_bytes = write(descritor,  string_, sizeof(string_) );		
+	close(descritor);
+	return 0;
+}
+
+```
 
 2. Crie um código em C que pergunta ao usuário seu nome e sua idade, e escreve este conteúdo em um arquivo com o seu nome e extensão '.txt'. Por exemplo, considerando que o código criado recebeu o nome de 'ola_usuario_1':
 
@@ -11,6 +29,34 @@ $ Digite a sua idade: 30
 $ cat Eu.txt
 $ Nome: Eu
 $ Idade: 30 anos
+```
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+
+
+int main(int argc, const char * argv[]) {
+
+	char nome[20], escrever[100] = "Nome: ", idade[3];
+	int descritor, n_bytes;
+    printf("Nome: ");
+    scanf("%s", nome);
+    printf("Idade: ");
+    scanf("%s", idade);
+    strcat(escrever,nome);
+    strcat(escrever,".\nIdade: ");
+    strcat(escrever,idade);
+    strcat(escrever," anos.");
+    strcat(nome,".txt");
+	descritor = open(nome, O_WRONLY | O_CREAT);
+	n_bytes = write(descritor,  escrever, sizeof(escrever) );		
+	close(descritor);
+	return 0;
+}
 ```
 
 3. Crie um código em C que recebe o nome do usuário e e sua idade como argumentos de entrada (usando as variáveis `argc` e `*argv[]`), e escreve este conteúdo em um arquivo com o seu nome e extensão '.txt'. Por exemplo, considerando que o código criado recebeu o nome de 'ola_usuario_2':
