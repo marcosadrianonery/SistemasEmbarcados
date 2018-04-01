@@ -101,6 +101,66 @@ int main(int argc, const char * argv[]) {
 
 
 4. Crie uma função que retorna o tamanho de um arquivo, usando o seguinte protótipo: `int tam_arq_texto(char *nome_arquivo);` Salve esta função em um arquivo separado chamado 'bib_arqs.c'. Salve o protótipo em um arquivo chamado 'bib_arqs.h'. Compile 'bib_arqs.c' para gerar o objeto 'bib_arqs.o'.
+```bash
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_4# cat arquivo.txt 
+Marcos
+
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_4# ./bib_arqs
+6 
+```
+
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+#include "bib_arqs.h"
+
+int main(int argc, const char * argv[]) {
+    char nome[] = "arquivo.txt";
+    int tamanho;
+    tamanho = tam_arq_texto(nome);    
+    printf("%d \n", tamanho);
+	return 0;
+}
+
+//bib_arqs.h
+int tam_arq_texto(char *nome_arquivo);
+
+//bib_arqs.c
+#include "bib_arqs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+
+
+int tam_arq_texto(char *nome_arquivo)
+{
+	int tamanho = -1, descritor, n_byte;
+	char c;
+	descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+    
+    if (descritor == -1) {
+		return -1;
+		close(descritor);
+	}
+    tamanho = lseek(descritor, 0, SEEK_END);
+	close(descritor);
+	return (tamanho - 2);
+}
+
+
+
+
+
+```
+
 
 5. Crie uma função que lê o conteúdo de um arquivo-texto e o guarda em uma string, usando o seguinte protótipo: `void le_arq_texto(char *nome_arquivo, char *conteúdo);` Repare que o conteúdo do arquivo é armazenado no vetor `conteudo[]`. Ou seja, ele é passado por referência. Salve esta função no mesmo arquivo da questão 4, chamado 'bib_arqs.c'. Salve o protótipo no arquivo 'bib_arqs.h'. Compile 'bib_arqs.c' novamente para gerar o objeto 'bib_arqs.o'.
 
