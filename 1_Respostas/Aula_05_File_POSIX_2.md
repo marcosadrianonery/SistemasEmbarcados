@@ -43,15 +43,15 @@ int main(int argc, const char * argv[]) {
 
 	char nome[20], escrever[100] = "Nome: ", idade[3];
 	int descritor, n_bytes;
-    printf("Nome: ");
-    scanf("%s", nome);
-    printf("Idade: ");
-    scanf("%s", idade);
-    strcat(escrever,nome);
-    strcat(escrever,".\nIdade: ");
-    strcat(escrever,idade);
-    strcat(escrever," anos.");
-    strcat(nome,".txt");
+	printf("Nome: ");
+	scanf("%s", nome);
+	printf("Idade: ");
+	scanf("%s", idade);
+	strcat(escrever,nome);
+	strcat(escrever,".\nIdade: ");
+	strcat(escrever,idade);
+	strcat(escrever," anos.");
+	strcat(nome,".txt");
 	descritor = open(nome, O_WRONLY | O_CREAT);
 	n_bytes = write(descritor,  escrever, sizeof(escrever) );		
 	close(descritor);
@@ -66,7 +66,39 @@ $ ./ola_usuario_2 Eu 30
 $ cat Eu.txt
 $ Nome: Eu
 $ Idade: 30 anos
+
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questã./bib_arqs Marcos 21
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_3# cat Marcos.txt
+Nome: Marcos.
+Idade: 21 anos.
+
 ```
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+
+
+int main(int argc, const char * argv[]) {
+
+	char nome[20], escrever[100] = "Nome: ";
+	int descritor, n_bytes;
+    strcpy(nome,argv[1]);
+    strcat(escrever, nome);
+    strcat(escrever,".\nIdade: ");
+    strcat(escrever, argv[2]);
+    strcat(escrever," anos.");
+    strcat(nome,".txt");
+	descritor = open(nome, O_WRONLY | O_CREAT);
+	n_bytes = write(descritor,  escrever, sizeof(escrever) );		
+	close(descritor);
+	return 0;
+}
+```
+
 
 4. Crie uma função que retorna o tamanho de um arquivo, usando o seguinte protótipo: `int tam_arq_texto(char *nome_arquivo);` Salve esta função em um arquivo separado chamado 'bib_arqs.c'. Salve o protótipo em um arquivo chamado 'bib_arqs.h'. Compile 'bib_arqs.c' para gerar o objeto 'bib_arqs.o'.
 
