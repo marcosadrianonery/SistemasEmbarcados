@@ -341,4 +341,110 @@ void le_arq_texto(char *nome_arquivo, char *conteudo);
 $ echo Ola mundo cruel! Ola universo ingrato! > ola.txt
 $ ./busca_e_conta Ola ola.txt
 $ 'Ola' ocorre 2 vezes no arquivo 'ola.txt'.
+
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_7# echo Ola mundo cruel! Ola universo ingrato! > ola.txt
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Questão_1/Questão_7# ./bib_arqs Ola ola.txt 
+Iguais: 2 
+
+```
+
+```C
+//MAIN
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+#include "bib_arqs.h"
+
+int main(int argc, const char * argv[]) {
+    char nome[20], conteudo[500], palavra_chave[20];
+    strcpy(nome,argv[2]);
+    strcpy(palavra_chave,argv[1]);
+    int tamanho_texto, tamanho_palavra, n, i, igual = 0, diferente = 0;;
+    
+    tamanho_texto = tam_arq_texto(nome); 
+    le_arq_texto(nome, conteudo);
+    tamanho_palavra = strlen(palavra_chave);
+    
+    for(n = 0; n <= tamanho_texto; n++)
+    {       
+            if((conteudo[n] == ' ') || (conteudo[n] == 'EOF') || (n == tamanho_texto) || (conteudo[n] == '.') || (conteudo[n] == ','))
+            {
+                for(i = 0; i < tamanho_palavra; i++)
+                {
+                    if(conteudo[n - tamanho_palavra + i] != palavra_chave[i])
+                    {
+                        diferente = 1;
+                        break;
+                    }
+                }
+                if (diferente != 1 )
+                {
+                    igual++;
+                }   
+            }        
+            diferente = 0;
+    }       
+    printf("Iguais: %d \n", igual);
+    return 0;
+}
+
+//bib_arqs.c
+#include "bib_arqs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> 
+#include <fcntl.h> 
+#include <termios.h>
+#include <string.h>
+
+
+int tam_arq_texto(char *nome_arquivo)
+{
+	int tamanho = -1, descritor, n_byte;
+	char c;
+	descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+    
+    if (descritor < 0)
+   {
+      perror (nome_arquivo);
+      return -1;
+   }
+    tamanho = lseek(descritor, 0, SEEK_END);
+	close(descritor);
+	return (tamanho - 1);
+}
+
+void le_arq_texto(char *nome_arquivo, char *conteudo)
+{
+    
+	int tamanho = 0, n_byte, descritor;
+	char c;
+    
+	tamanho = tam_arq_texto(nome_arquivo);
+    
+    descritor = open (nome_arquivo, O_RDWR | O_CREAT);
+     
+        if (descritor < 0){
+            
+            perror (nome_arquivo);
+            return;
+        }
+    
+       /* deve-se passar sempre o endereço de memória da variável que vai receber os bytes lidos */
+   n_byte = read (descritor, conteudo, tamanho*sizeof(char));
+ 
+   if (n_byte < 0)
+   {
+      perror (nome_arquivo);
+      return;
+   }
+	close(descritor);
+}
+
+//bib_arqs.h
+int tam_arq_texto(char *nome_arquivo);
+void le_arq_texto(char *nome_arquivo, char *conteudo);
 ```
