@@ -122,8 +122,146 @@ void Incrementa_Variavel_Global(pid_t id_atual)
 	printf("ID do processo que executou esta funcao = %d\n", id_atual);
 	printf("v_global = %d\n", v_global);
 }
-```
 
-(Repare que a função `Incrementa_Variavel_Global()` recebe como entrada o ID do processo que a chamou.) Responda: a variável global `v_global` foi compartilhada por todos os processos-filho, ou cada processo enxergou um valor diferente para esta variável?
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////	CODIGO	///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/signal.h>
+#include <errno.h>
+
+
+
+
+int v_global = 0; // Variavel global para este exemplo
+void Incrementa_Variavel_Global(pid_t id_atual)
+{
+	v_global++;
+	printf("ID do processo que executou esta funcao = %d\n", id_atual);
+	printf("v_global = %d\n", v_global);
+}
+
+
+
+int main(void) {
+int pid_filho_1, pid_filho_2, pid_filho_3,  pid_pai;
+printf("Pid pai antes do primeiro Fork() -  %d\n", getpid());
+pid_filho_1 = fork();
+
+if (pid_filho_1 == 0)
+	{
+		Incrementa_Variavel_Global(getpid());
+	}
+else{
+		sleep(1);
+		pid_filho_2 = fork();
+
+		if (pid_filho_2 == 0)
+			{
+				Incrementa_Variavel_Global(getpid());
+			}
+			else{
+				sleep(1);
+				pid_filho_3 = fork();
+				
+				if (pid_filho_3 == 0)
+				{
+					Incrementa_Variavel_Global(getpid());
+				}
+				else{
+				sleep(1);
+				printf("Pid pai  depois do terceiro Fork(), o terceiro filho já foi criado-  %d\n", getpid());
+				}
+			} 
+	}
+
+}
+
+```
+```BASH
+marcosadriano@marcosadriano:~/Área de trabalho/Aula_06/Questão_04$ ./bib_arqs
+Pid pai antes do primeiro Fork() -  3674
+ID do processo que executou esta funcao = 3675
+v_global = 1
+ID do processo que executou esta funcao = 3676
+v_global = 1
+ID do processo que executou esta funcao = 3677
+v_global = 1
+Pid pai  depois do terceiro Fork(), o terceiro filho já foi criado-  3674
+```
+(Repare que a função `Incrementa_Variavel_Global()` recebe como entrada o ID do processo que a chamou.) Responda: a variável global `v_global` foi compartilhada por todos os processos-filho, ou cada processo enxergou um valor diferente para esta variável? Todos receberam um mesmo valor, enxergaram o valor presente no processo Pai.
 
 5. Repita a questão anterior, mas desta vez faça com que o processo-pai também chame a função `Incrementa_Variavel_Global()`. Responda: a variável global `v_global` foi compartilhada por todos os processos-filho e o processo-pai, ou cada processo enxergou um valor diferente para esta variável?
+```bash
+marcosadriano@marcosadriano:~/Área de trabalho/Aula_06/Questão_04$ ./bib_arqs
+Pid pai antes do primeiro Fork() -  3960
+ID do processo que executou esta funcao = 3960
+v_global = 1
+ID do processo que executou esta funcao = 3961
+v_global = 1
+ID do processo que executou esta funcao = 3962
+v_global = 2
+ID do processo que executou esta funcao = 3960
+v_global = 2
+ID do processo que executou esta funcao = 3963
+v_global = 3
+ID do processo que executou esta funcao = 3960
+v_global = 3
+Pid pai  depois do terceiro Fork(), o terceiro filho já foi criado-  3960
+```
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/signal.h>
+#include <errno.h>
+int v_global = 0; // Variavel global para este exemplo
+void Incrementa_Variavel_Global(pid_t id_atual)
+{
+	v_global++;
+	printf("ID do processo que executou esta funcao = %d\n", id_atual);
+	printf("v_global = %d\n", v_global);
+}
+int main(void) {
+int pid_filho_1, pid_filho_2, pid_filho_3,  pid_pai;
+printf("Pid pai antes do primeiro Fork() -  %d\n", getpid());
+pid_filho_1 = fork();
+
+if (pid_filho_1 == 0)
+	{
+		Incrementa_Variavel_Global(getpid());
+	}
+else{
+		Incrementa_Variavel_Global(getpid());
+
+		sleep(1);
+		pid_filho_2 = fork();
+
+		if (pid_filho_2 == 0)
+			{
+				Incrementa_Variavel_Global(getpid());
+			}
+			else{
+				sleep(1);
+				Incrementa_Variavel_Global(getpid());
+				pid_filho_3 = fork();
+				if (pid_filho_3 == 0)
+				{
+				Incrementa_Variavel_Global(getpid());
+				}
+				else{
+				sleep(1);
+				Incrementa_Variavel_Global(getpid());
+				printf("Pid pai  depois do terceiro Fork(), o terceiro filho já foi criado-  %d\n", getpid());
+				}
+			} 
+	}
+
+}
+```
+
+
