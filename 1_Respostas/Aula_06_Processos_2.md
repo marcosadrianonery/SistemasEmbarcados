@@ -75,6 +75,39 @@ $  5  6  7  8  9 10 11
 $ 12 13 14 15 16 17 18
 $ 19 20 21 22 23 24 25
 $ 26 27 28 29 30 31
+
+
+marcosadriano@marcosadriano:~/Área de trabalho/Aula_06/Questão_02$ ./bib_arqs pwd echo ls echo cal
+/home/marcosadriano/Área de trabalho/Aula_06/Questão_02
+
+bib_arqs  bib_arqs.c  bib_arqs.h  bib_arqs.o  main.c  main.o  Makefile	Nome.txt  README.md
+
+     Abril 2018       
+do se te qu qu se sá  
+ 1  2  3  4  5  6  7  
+ 8  9 10 11 12 13 14  
+15 16 17 18 19 20 21  
+22 23 24 25 26 27 28  
+29 30 
+```
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/signal.h>
+#include <errno.h>
+#include <string.h>
+int main(int argc, const char * argv[]) {
+int n;
+char entrada[20];
+	for(n = 1; n < argc; n ++)
+	{
+		strcpy (entrada, argv[n]);
+		system(entrada);
+	}
+}
 ```
 
 3. Crie um código em C que recebe o nome de diversos comandos pelos argumentos de entrada (`argc` e `*argv[]`), e executa cada um usando `fork()` e `exec()`.
