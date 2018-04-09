@@ -71,4 +71,8 @@ Sabendo que a função `alarm()` tem como entrada a quantidade de segundos para 
 quão precisos são os alarmes criados neste código? De onde vem a imprecisão? Este é um método 
 confiável para desenvolver aplicações em tempo real?
 ```bash
-A precisão da contagem não dá para saber com exatidão, pois o processador roda diversos processos ao mesmo tempo e isto vai depender do tanto de tarefas que este estiver executando, quantos cores, qual a velocidade de processamento, etc. Mas em um teste em sala foi possivél concluir que no dispositivo testado a precisão é da ordem de algumas dezenas de milissegundos. A imprecisão é variável e não tem como torna este método confiável para aplicações em tempo real.```
+A precisão da contagem não dá para saber com exatidão, pois o processador roda diversos processos
+ao mesmo tempo e isto vai depender do tanto de tarefas que este estiver executando, quantos cores,
+qual a velocidade de processamento, etc. Mas em um teste em sala foi possivél concluir que no
+dispositivo testado a precisão é da ordem de algumas dezenas de milissegundos. A imprecisão é 
+variável e não tem como torna este método confiável para aplicações em tempo real.```
