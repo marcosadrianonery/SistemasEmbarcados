@@ -347,3 +347,159 @@ Media: 1070310870
 ```
 
 4. Repita o exercício anterior, mas calcule a variância do vetor ao invés da média.
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <string.h>
+
+	long int v[50000], soma = 0, variancia = 0, media = 0, variancia_numerador = 0, aux_variancia;
+    int i;
+    int parametro[30];
+    
+
+ int main()
+ {
+
+     for(i = 0; i < 50000 ; i++)
+ 	{
+        v[i] = random();
+        
+    }
+     
+       for(i = 0; i < 50000 ; i++)
+ 	{
+            soma = v[i] + soma;
+            
+    }
+
+    media = (soma/50000);
+    
+         for(i = 0; i < 50000 ; i++)
+ 	{
+            aux_variancia = ( v[i] - media);
+            variancia = variancia_numerador + (aux_variancia)*(aux_variancia)/50000;
+    }
+
+    
+    printf("Soma: %ld\n", soma); 	
+    printf("Valor media: %ld\n", soma/50000); 
+//     printf("aux_variancia: %ld\n", aux_variancia); 
+//     printf("variancia: %ld\n", variancia_numerador); 	
+    printf("variancia: %ld\n", variancia); 	
+
+ 	return 0;
+}
+```
+```bash
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_04# ./main.exe
+Soma: 53515543507997
+Valor media: 1070310870
+aux_variancia: 324751885
+variancia: 2109275736221
+```
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			PARTE B
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <string.h>
+
+	long int v[50000], soma = 0, variancia = 0, media = 0, variancia_numerador = 0, aux_variancia;
+
+    int i;
+    long int  soma, soma_1, soma_2, soma_3;
+    
+
+void *print_thread_1(void *parameters)
+{
+
+    for(i = 0; i < 12500 ; i++)
+ 	{
+            soma = soma + v[i];
+ 	}  
+}
+
+void *print_thread_2(void *parameters)
+{
+    for(int n = 12500; n < 25000 ; n++)
+ 	{           
+        soma_1 = soma_1 + v[n];
+ 	}  
+}
+
+void *print_thread_3(void *parameters)
+{
+    for(int m = 25000; m < 37500 ; m++)
+ 	{
+        soma_2 = soma_2 + v[m];
+ 	}  
+     
+}
+
+void *print_thread_4(void *parameters)
+{
+    for(int k = 37500; k < 50000 ; k++)
+ 	{
+        soma_3 = soma_3 + v[k];
+ 	} 
+     
+}
+
+ int main()
+ {
+ 	
+    pthread_t thread_1, thread_2, thread_3, thread_4;
+    
+     for(i = 0; i < 50000 ; i++)
+ 	{
+        v[i] = random();
+        
+    }
+     
+    pthread_create(&thread_1,NULL, &print_thread_1, &thread_1);
+ 	pthread_create(&thread_2,NULL, &print_thread_2, &thread_2);
+ 	pthread_create(&thread_3,NULL, &print_thread_3, &thread_3);
+ 	pthread_create(&thread_4,NULL, &print_thread_4, &thread_4);
+
+    pthread_join(thread_1,NULL);
+    pthread_join(thread_2,NULL);
+    pthread_join(thread_3,NULL);
+    pthread_join(thread_4,NULL);
+
+    soma = soma + soma_1 + soma_2 + soma_3;
+    
+    
+    media = (soma/50000);
+    
+         for(i = 0; i < 50000 ; i++)
+ 	{
+            aux_variancia = ( v[i] - media);
+            variancia = variancia_numerador + (aux_variancia)*(aux_variancia)/50000;
+    }
+
+    
+    printf("Soma: %ld\n", soma); 	
+    printf("Valor media: %ld\n", media); 
+//     printf("aux_variancia: %ld\n", aux_variancia); 
+//     printf("variancia: %ld\n", variancia_numerador); 	
+    printf("variancia: %ld\n", variancia); 
+    
+    return 0;
+}
+
+```
+
+
+
+```bash
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_04_b# gcc main.c -lpthread -o main.exe
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_04_b# ./main.exe
+Soma: 53515543507997
+Valor media: 1070310870
+variancia: 2109275736221
+```
