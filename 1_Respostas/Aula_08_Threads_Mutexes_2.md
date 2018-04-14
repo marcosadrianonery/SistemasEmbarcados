@@ -112,7 +112,102 @@ Recebi 10
 }
 C
 
-(b) Separando o vetor em 4 partes, e usando 4 threads para cada uma encontrar o máximo de cada parte. Ao final das threads, o programa principal compara o resultado das quatro threads para definir o máximo do vetor.
+(b) Separando o vetor em 4 partes, e usando 4 threads para cada uma encontrar o máximo de cada parte.
+Ao final das threads, o programa principal compara o resultado das quatro threads para definir o 
+máximo do vetor.
+```C
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <string.h>
+
+	long int v[50000];
+    int i;
+    int quantidade = 0, valor = 542734400;
+    
+
+void *print_thread_1(void *parameters)
+{
+
+    for(i = 0; i < 12500 ; i++)
+ 	{
+        if(v[i] == valor)
+        {
+        
+            quantidade++;
+        }
+ 	}  
+}
+
+void *print_thread_2(void *parameters)
+{
+    for(int n = 12500; n < 25000 ; n++)
+ 	{
+        if(v[n] == valor)
+        {
+        
+            quantidade++;
+        }
+ 	}  
+}
+
+void *print_thread_3(void *parameters)
+{
+    for(int m = 25000; m < 37500 ; m++)
+ 	{
+        if(v[m] == valor)
+        {
+        
+            quantidade++;
+        }
+ 	}  
+     
+}
+
+void *print_thread_4(void *parameters)
+{
+    for(int k = 37500; k < 50000 ; k++)
+ 	{
+        if(v[k] == valor)
+        {
+            quantidade++;
+        }
+ 	}  
+     
+}
+
+ int main()
+ {
+ 	
+    pthread_t thread_1, thread_2, thread_3, thread_4;
+    
+     for(i = 0; i < 50000 ; i++)
+ 	{
+        v[i] = random();
+        
+    }
+     
+    pthread_create(&thread_1,NULL, &print_thread_1, &thread_1);
+ 	pthread_create(&thread_2,NULL, &print_thread_2, &thread_2);
+ 	pthread_create(&thread_3,NULL, &print_thread_3, &thread_3);
+ 	pthread_create(&thread_4,NULL, &print_thread_4, &thread_4);
+
+    pthread_join(thread_1,NULL);
+    pthread_join(thread_2,NULL);
+    pthread_join(thread_3,NULL);
+    pthread_join(thread_4,NULL);
+     	 	
+    printf("Iguais: %d\n", quantidade); 	    
+    
+    return 0;
+}
+```
+```bash
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03# ./main.exe
+Iguais: 1
+```
+
 
 Ao final do programa principal, compare os resultados obtidos pelos dois métodos.
 
