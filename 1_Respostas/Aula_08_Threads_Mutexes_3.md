@@ -44,7 +44,7 @@ end of the pipe.
 
 3. If **mode** is any other value, the result is undefined. 
 
-# Return Value
+## Return Value
 
 Upon sucessful completion, **popen()** shall return a pointer to an open stram that can be used 
 to read or write to the pipe. Otherwise, it shall return a null pointer and may set **errno** to 
@@ -54,20 +54,20 @@ indicate the error.
 
 pclose - close a pipe stram to or from a process
 
-# Synopsis
+## Synopsis
 
 ```C
 	#include <stdio.h>
 	int pclose(FILE *stream);
 ```
-# Description
+## Description
 
 The **pclose()** function shall close a stream that was opened by **popen()**, wait for the command
 to terminate, and return the termination status of the process that was running the command language
 interpreter. However, if a call caused the termination status to be unavailable to **pclose()**, then 
 **pclose()** shall return -1 with **errno** set to [ECHILD] to report this situation.
 
-# Return Value
+## Return Value
 
 Upon successful return, **pclose()** shall return the termination status of the command language
 interpreter. Otherwise, **pclose()** shall return -1 and set ***errno** to indicate the error.
@@ -78,22 +78,22 @@ interpreter. Otherwise, **pclose()** shall return -1 and set ***errno** to indic
 
 fileno - map a stram pointer to a file descriptor
 
-# Synopsis
+## Synopsis
 
 ```C
 	#include <stdio.h>
 	int fileno(FILE *stram);
 ```
-# Description 
+## Description 
 
 The *fileno()* function shall return the integer file descriptor associated with the stram ponted to by *stream*.
 
-# Return Value
+## Return Value
 
 Upon succesful completion, *fileno()* shall return the integer value of the file descriptor associated 
 with *stream*. Otherwise, the value -1 shall be returned and *errno* set to indicate the error.
 
-# ERRORS
+## ERRORS
 
 The *fileno()* function may fail if:
 
