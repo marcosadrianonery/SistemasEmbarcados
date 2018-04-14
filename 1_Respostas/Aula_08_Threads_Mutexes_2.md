@@ -202,7 +202,7 @@ void *print_thread_4(void *parameters)
     pthread_join(thread_3,NULL);
     pthread_join(thread_4,NULL);
      	 	
-    printf("Iguais: %d\n",  valor_max); 	    
+    printf("Valor max: %d\n",  valor_max); 	    
     
     return 0;
 }
@@ -221,10 +221,6 @@ Ao final do programa principal, compare os resultados obtidos pelos dois método
 
 3. Repita o exercício anterior, mas calcule a média do vetor ao invés do valor máximo.
 ```C
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <unistd.h>
 #include <string.h>
 
 	long int v[50000], soma;
@@ -245,20 +241,20 @@ Ao final do programa principal, compare os resultados obtidos pelos dois método
             soma = v[i] + soma;
             
     }
-     
-    printf("Valor valor_max: %ld\n", soma/50000); 	
+
+    printf("Soma: %ld\n", soma); 	
+    printf("Valor media: %ld\n", soma/50000); 	
 
  	return 0;
 }
+
+
 ```
 ```bash
-root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03# ./main.exe
-Valor valor_max: 53515543507997
-root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03# ^C
-root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03# gcc main.c -lpthread -o main.exe
-root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03# ./main.exe
-Valor valor_max: 1070310870
-
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03_A# gcc main.c -lpthread -o main.exe
+root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03_A# ./main.exe
+Soma: 53515543507997
+Valor media: 1070310870
 
 ```
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -335,16 +331,19 @@ void *print_thread_4(void *parameters)
 
     soma = soma + soma_1 + soma_2 + soma_3;
     
-    printf("Iguais: %d\n",  soma/50000); 	    
+    printf("Soma: %ld\n",  soma); 	    
+    printf("Media: %ld\n",  soma/50000); 	    
     
     return 0;
 }
+
 ```
 
 ```bash
 root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03_b# gcc main.c -lpthread -o main.exe
 root@marcosadriano:/home/marcosadriano/Área de trabalho/Aula_08/Questão_03_b# ./main.exe
-Iguais: 1070310870
+Soma: 53515543507997
+Media: 1070310870
 ```
 
 4. Repita o exercício anterior, mas calcule a variância do vetor ao invés da média.
