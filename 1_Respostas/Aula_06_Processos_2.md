@@ -111,6 +111,28 @@ char entrada[20];
 ```
 
 3. Crie um código em C que recebe o nome de diversos comandos pelos argumentos de entrada (`argc` e `*argv[]`), e executa cada um usando `fork()` e `exec()`.
+```C
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/types.h>
+#include<unistd.h>
+#include<sys/wait.h>
+
+int main(int argc, const char *argv[])
+{
+	int i;
+	char *lista[2] = {NULL, NULL};
+	for(i=1;i<argc;i++)
+	{
+        lista[0] = (char* )argv[i];
+        execvp(lista[0],lista);
+    }	
+    
+	return 0;
+}
+
+```
+
 
 4. Crie um código em C que gera três processos-filho usando o `fork()`, e que cada processo-filho chama a seguinte função uma vez:
 
