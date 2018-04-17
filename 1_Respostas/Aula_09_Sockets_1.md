@@ -1,7 +1,7 @@
 1. Com relação ao modelo cliente-servidor, responda:
 
 (a) Quais são as características básicas deste modelo?
-```BASH
+```bash
 Basicamente tem-se uma extensão do conceito de pipe com	
 a	possibilidade	de comunicação	através	de	rede	de	
 computadores. Um processo	pode utilizar socket para se	
