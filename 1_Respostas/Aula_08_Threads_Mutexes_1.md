@@ -25,7 +25,7 @@
     Quantas threads serão criadas após as linhas de código a seguir? Quantas coexistirão? Por quê?
 
 (a)
-
+```C
 void* funcao_thread_1(void *arg);
 void* funcao_thread_2(void *arg);
 
@@ -38,11 +38,11 @@ int main (int argc, char** argv)
 	pthread_join(t2, NULL); //THREAD ESPERA FIM DE FUNÇÃO APONTADA POR DESCRITOR t2
 	return 0;
 }
-
+```
 Serão criadas 2 Threads e coexistirão 2;
 
 (b)
-
+```C
 void* funcao_thread_1(void *arg);
 void* funcao_thread_2(void *arg);
 
@@ -58,7 +58,7 @@ int main (int argc, char** argv)
 	pthread_join(t2, NULL);	//THREAD ESPERA FIM DE FUNÇÃO APONTADA POR DESCRITOR t2
 	return 0;
 }
-
+```
 Serão criadas 2 Threads e coexistirão 1 a cada vez, a segunda só é criada com o fim da pŕimeira;
 
     Apresente as características e utilidades das seguintes funções:
