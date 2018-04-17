@@ -2,12 +2,12 @@
 
 (a) Quais são as características básicas deste modelo?
 ```BASH
-Basicamente tem-se uma	extensão	do	conceito	de	pipe	com	
-a	possibilidade	de	comunicação	através	de	rede	de	
-computadores.	Um	processo	pode	utilizar	socket	para	se	
-comunicar	com	outro	processo	utilizando	um	
-modelo	cliente/servidor	tanto	através	da	rede	
-quanto	internamente	em	uma	mesma	máquina. Por meio disso
+Basicamente tem-se uma extensão do conceito de pipe com	
+a	possibilidade	de comunicação	através	de	rede	de	
+computadores. Um processo	pode utilizar socket para se	
+comunicar	com	outro	processo utilizando um 
+modelo cliente/servidor tanto	através	da	rede 
+quanto internamente em uma	mesma	máquina. Por meio disso
 h uma comunicação entre um e outro```
 
 (b) Quais são as características básicas do servidor?
