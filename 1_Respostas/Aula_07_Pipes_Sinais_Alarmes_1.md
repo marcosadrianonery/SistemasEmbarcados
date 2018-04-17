@@ -19,12 +19,12 @@ int pid;
 int fd[2];
 pid = fork();
 pipe(fd);
-
+```
 ```bash
 Tem-se 2 pipes sendo que cada um com uma posição para leitura e outra para escrita.
 Sendo que a criação do mesmo ocorreu depois do fork e tanto o Pai
 quanto o Filho criaram seu pipe em seu proprio processo, e um não enxerga o do outro.
-``````
+```
 
 
 2. Apresente mais cinco sinais importantes do ambiente Unix, além do `SIGSEGV`, `SIGUSR1`, `SIGUSR2`,
