@@ -282,4 +282,324 @@ CLIENTE: Mas até uma criança de três anos sabe disso!
 SERVIDOR: Sim, mas é uma coisa difícil de ser praticada até mesmo por um velho como eu...
 ```
 
+```C
+//////////////////////////////////////////////////////////////////////////////
+		CODIGO CLIENTE
+//////////////////////////////////////////////////////////////////////////////
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <sys/un.h>
+#include <unistd.h>
+
+int main (int argc, char* const argv[])
+{
+	int socket_id;
+	struct sockaddr_in servidorAddr;
+	int length;
+	unsigned short servidorPorta;
+	char *IP_Servidor;
+	char *mensagem;
+
+	if (argc != 4)
+	{
+		puts("   Este programa cria um cliente que se comunica");
+		puts("   a um servidor TCP/IP na porta especificada");
+		puts("   pelo usuario. Para permitir que o cliente comunique-se");
+		puts("   com este servidor, o servidor deve ser");
+		puts("   executado inicialmente com uma porta definida,");
+		puts("   e o cliente devera ser executado em outra");
+		puts("   janela ou em outra aba do terminal, utilizando");
+		puts("   a mesma porta. O servidor escreve na tela");
+		puts("   todo texto enviado pelo cliente. Se o cliente");
+		puts("   transmitir o texto \"sair\", o servidor se");
+		puts("   encerra. Se o usuario pressionar CTRL-C para");
+		puts("   o servidor, ele tambem se encerra.");
+		puts("   Modo de Uso:");
+		printf("      %s <IP do Servidor> <Porta do servidor> <Mensagem>\n", argv[0]);
+		printf("   Exemplo: %s 127.0.0.1 8000 \"Ola socket\"\n", argv[0]);
+		exit(1);
+	}
+	IP_Servidor = argv[1];
+	servidorPorta = atoi(argv[2]);
+	mensagem = argv[3];
+
+	fprintf(stderr, "Abrindo o socket para o cliente... ");
+	socket_id = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if(socket_id < 0)
+	{
+		fprintf(stderr, "Erro na criacao do socket!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+	
+	fprintf(stderr, "Conectando o socket ao IP %s pela porta %d... ", IP_Servidor, servidorPorta);
+	memset(&servidorAddr, 0, sizeof(servidorAddr)); // Zerando a estrutura de dados
+	servidorAddr.sin_family = AF_INET;
+	servidorAddr.sin_addr.s_addr = inet_addr(IP_Servidor);
+	servidorAddr.sin_port = htons(servidorPorta);
+	if(connect(socket_id, (struct sockaddr *) &servidorAddr, 
+							sizeof(servidorAddr)) < 0)
+	{
+		fprintf(stderr, "Erro na conexao!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+
+	fprintf(stderr, "Mandando mensagem ao servidor... ");
+   
+
+	 char mensagem_1[] = "Pai, qual é a verdadeira essência da sabedoria?";
+	 char mensagem_2[] = "Mas até uma criança de três anos sabe disso!";
+	char *entrada, sinal;
+	char *text;
+
+
+
+	
+    //cliente ESCREVE
+    length = strlen(mensagem_1) + 1;
+	write(socket_id, &length, sizeof(length));
+	write(socket_id, mensagem_1, length);
+	
+//CLIENTE VAI LER
+ while(1)
+{   
+	read(socket_id, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(socket_id, text, length);    
+
+	if(!strcmp (text, "chave"))
+	{
+	read(socket_id, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(socket_id, text, length);
+	fprintf(stderr, "Cliente leu: %s.", text);
+
+		break;
+	}
+ }   
+    
+   //cliente ESCREVE
+    length = strlen(mensagem_2) + 1;
+	write(socket_id, &length, sizeof(length));
+	write(socket_id, mensagem_2, length);
+ 
+while(1)
+{   
+	read(socket_id, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(socket_id, text, length);    
+
+	if(!strcmp (text, "chave"))
+	{
+	read(socket_id, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(socket_id, text, length);
+	fprintf(stderr, "Cliente leu: %s.", text);
+
+		break;
+	}
+ }   
+
+    
+    	fprintf(stderr, "Feito!\n");
+
+	fprintf(stderr, "Fechando o socket local... ");
+	close(socket_id);
+	fprintf(stderr, "Feito!\n");
+	return 0;
+}
+///////////////////////////////////////////////////////////////////////////
+			CODIGO SERVIDOR
+/////////////////////////////////////////////////////////////////////////////
+// Servidor Local
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <signal.h>
+
+int socket_id;
+void sigint_handler(int signum);
+void print_client_message(int client_socket);
+void end_server(void);
+
+int main (int argc, char* const argv[])
+{
+	unsigned short servidorPorta;
+	struct sockaddr_in servidorAddr;
+
+	if (argc < 2)
+	{
+		puts("   Este programa cria um servidor TCP/IP ");
+		puts("   conectado a porta especificada pelo usuario.");
+		puts("   Para permitir que o cliente comunique-se");
+		puts("   com este servidor, o servidor deve ser");
+		puts("   executado inicialmente com uma porta definida,");
+		puts("   e o cliente devera ser executado em outra");
+		puts("   janela ou em outra aba do terminal, utilizando");
+		puts("   a mesma porta. O servidor escreve na tela");
+		puts("   todo texto enviado pelo cliente. Se o cliente");
+		puts("   transmitir o texto \"sair\", o servidor se");
+		puts("   encerra. Se o usuario pressionar CTRL-C,");
+		puts("   o servidor tambem se encerra.");
+		puts("   Modo de Uso:");
+		printf("      %s <Numero da porta>\n", argv[0]);
+		printf("   Exemplo: %s 8080\n", argv[0]);
+		exit(1);
+	}
+	servidorPorta = atoi(argv[1]);
+
+	fprintf(stderr, "Definindo o tratamento de SIGINT... ");
+	signal(SIGINT, sigint_handler);
+	fprintf(stderr, "Feito!\n");
+	
+	fprintf(stderr, "Abrindo o socket local... ");
+	socket_id = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if(socket_id < 0)
+	{
+		fprintf(stderr, "Erro na criacao do socket!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+
+	fprintf(stderr, "Ligando o socket a porta %d... ", servidorPorta);
+	memset(&servidorAddr, 0, sizeof(servidorAddr)); // Zerando a estrutura de dados
+	servidorAddr.sin_family = AF_INET;
+	servidorAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+	servidorAddr.sin_port = htons(servidorPorta);
+	if(bind(socket_id, (struct sockaddr *) &servidorAddr, sizeof(servidorAddr)) < 0)
+	{
+		fprintf(stderr, "Erro na ligacao!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+
+	fprintf(stderr, "Tornando o socket passivo (para virar um servidor)... ");
+	if(listen(socket_id, 10) < 0)
+	{
+		fprintf(stderr, "Erro!\n");
+		exit(0);
+	}
+	fprintf(stderr, "Feito!\n");
+
+	while(1)
+	{
+		int socketCliente;
+		struct sockaddr_in clienteAddr;
+		unsigned int clienteLength;
+
+		fprintf(stderr, "Aguardando a conexao de um cliente... ");
+		clienteLength = sizeof(clienteAddr);
+		if((socketCliente = accept(socket_id, (struct sockaddr *) &clienteAddr, &clienteLength)) < 0)
+			fprintf(stderr, "Falha no accept().\n");
+		fprintf(stderr, "Feito!\n");
+		
+		fprintf(stderr, "Conexão do Cliente %s\n", inet_ntoa(clienteAddr.sin_addr));
+		
+		fprintf(stderr, "Tratando comunicacao com o cliente... ");
+		print_client_message(socketCliente);
+		fprintf(stderr, "Feito!\n");
+
+		fprintf(stderr, "Fechando a conexao com o cliente... ");
+		close(socketCliente);
+		fprintf(stderr, "Feito\n");
+	}
+	return 0;
+}
+
+void sigint_handler(int signum)
+{
+	fprintf(stderr, "\nRecebido o sinal CTRL+C... vamos desligar o servidor!\n");
+	end_server();
+}
+
+void print_client_message(int client_socket)
+{
+
+	char mensagem_1[] = "Não façais nada violento, praticai somente aquilo que é justo e equilibrado.";    
+	char mensagem_2[] = "Sim, mas é uma coisa difícil de ser praticada até mesmo por um velho como eu...";
+	int length;
+	char* text;
+	fprintf(stderr, "\nMensagem enviada pelo cliente tem ");
+//CLIENTE PEDE PARA CONVERSAR E ESCREVE
+	read(client_socket, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(client_socket, text, length);
+
+//SERVIDOR ESCREVE
+	length = strlen("chave") + 1;
+	write(client_socket, &length, sizeof(length));
+	write(client_socket, "chave", length);
+
+ 	length = strlen(mensagem_1) + 1;
+	write(client_socket, &length, sizeof(length));
+	write(client_socket, mensagem_1, length);
+
+//SERVIDOR VAI LER
+ while(1)
+{   
+	read(client_socket, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(client_socket, text, length);    
+
+	if(!strcmp (text, "chave"))
+	{
+	read(client_socket, &length, sizeof (length));
+	text = (char*) malloc (length);
+	read(client_socket, text, length);
+	fprintf(stderr, "Servidor leu: %s.", text);
+
+		break;
+	}
+ }   
+ 
+    //SERVIDOR ESCREVE
+	length = strlen("chave") + 1;
+	write(client_socket, &length, sizeof(length));
+	write(client_socket, "chave", length);
+
+ 	length = strlen(mensagem_2) + 1;
+	write(client_socket, &length, sizeof(length));
+	write(client_socket, mensagem_2, length); 
+    
+    
+    
+// 	if(!strcmp (text, "chave"))
+// 
+// 	read(client_socket, &length, sizeof (length));
+// 	fprintf(stderr, "%d bytes.", length);
+// 	text = (char*) malloc (length);
+// 
+// 	read(client_socket, text, length);
+
+/*
+
+	fprintf(stderr,"\n\n   Mensagem = %s\n\n", text);*/
+	if (!strcmp (text, "sair"))
+	{
+		free (text);
+		fprintf(stderr, "Cliente pediu para o servidor fechar.\n");
+		end_server();
+	}
+	free (text);
+}
+
+void end_server(void)
+{
+	fprintf(stderr, "Fechando o socket local... ");
+	close(socket_id);
+	fprintf(stderr, "Feito!\n");
+	exit(0);
+}
+
+/////////////////////////////////////////////////////////////////////////////////Q
+```
+
 Neste exercício, o cliente deve escrever no terminal as mensagens enviadas e recebidas.
