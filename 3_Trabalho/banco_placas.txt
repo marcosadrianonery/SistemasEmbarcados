@@ -1,0 +1,123 @@
+0-Placa: fmw3777
+1-Regular: NAO / Placa: fmw3777
+2-Renavam: 
+3-Chassi: 
+4-Marca/Modelo: BMW
+5-Cor: Preta
+6-Ano: 2005
+7-Fab/Modelo: 2005
+8-Tipo: 
+9-Combustível: FLEX
+10-Potência/Cilindradas: 
+11-Categoria: 
+12-Capacidade de Passageiros: 
+13-Espécie: 
+14-Nacionalidade: 
+15-Município: 
+16-Roubo/Furto: SIM
+17-Situação do Veículo: EM CIRCULACAO 
+18-Ano: 2006
+19-Licenciamento Restrição: ALIENACAO FIDUCIARIA 
+20-Licenciamento: Não existe(m) débito(s) de Licenciamento até o presente momento. 
+21-Licença de Utilização Anual: Não existe(m) débito(s) de Licença de Utilização Anual até o presente momento. 
+22-IPVA: A consulta e emissão dos débitos de IPVA só poderá ser feita através da Secretaria de Fazenda do Distrito Federal. 
+23-Seguro Obrigatório (DPVAT): Não existe(m) débito(s) de Seguro Obrigatório até o presente momento. 
+24-Serviços do DETRAN: Não existe(m) débito(s) de Serviço(s) até o presente momento. 
+25-Parcelamento de Serviços do DETRAN: Não existe(m) débito(s) de Parcelamento de Serviço(s) até o presente momento. 
+26-Infrações: Não existe(m) débito(s) de Multa até o presente momento. 
+27-Recurso de Infrações: Não existem recursos de multas até o presente momento.
+
+
+
+0-Placa: fqf9941
+1-Regular: NAO / Placa: fqf9941
+2-Renavam: 
+3-Chassi: 
+4-Marca/Modelo: Onix - CHEVROLET
+5-Cor: Preta
+6-Ano: 2014
+7-Fab/Modelo: 2014
+8-Tipo: 
+9-Combustível: FLEX
+10-Potência/Cilindradas: 
+11-Categoria: 
+12-Capacidade de Passageiros: 
+13-Espécie: 
+14-Nacionalidade: 
+15-Município: 
+16-Roubo/Furto: NAO
+17-Situação do Veículo: EM CIRCULACAO 
+18-Ano: 2006
+19-Licenciamento Restrição: ALIENACAO FIDUCIARIA 
+20-Licenciamento: Não existe(m) débito(s) de Licenciamento até o presente momento. 
+21-Licença de Utilização Anual: Não existe(m) débito(s) de Licença de Utilização Anual até o presente momento. 
+22-IPVA: A consulta e emissão dos débitos de IPVA só poderá ser feita através da Secretaria de Fazenda do Distrito Federal. 
+23-Seguro Obrigatório (DPVAT): Não existe(m) débito(s) de Seguro Obrigatório até o presente momento. 
+24-Serviços do DETRAN: Não existe(m) débito(s) de Serviço(s) até o presente momento. 
+25-Parcelamento de Serviços do DETRAN: Não existe(m) débito(s) de Parcelamento de Serviço(s) até o presente momento. 
+26-Infrações: Não existe(m) débito(s) de Multa até o presente momento. 
+27-Recurso de Infrações: Existem debitos de infrações.
+
+
+
+0-Placa: jsf1084
+1-Regular: NAO / Placa: jsf1084
+2-Renavam: 
+3-Chassi: 
+4-Marca/Modelo: BMW
+5-Cor: Vermelha
+6-Ano: 2009
+7-Fab/Modelo: 2009
+8-Tipo: 
+9-Combustível: FLEX
+10-Potência/Cilindradas: 
+11-Categoria: 
+12-Capacidade de Passageiros: 
+13-Espécie: 
+14-Nacionalidade: 
+15-Município: 
+16-Roubo/Furto: NAO
+17-Situação do Veículo: EM CIRCULACAO 
+18-Ano: 2009
+19-Licenciamento Restrição: ALIENACAO FIDUCIARIA 
+20-Licenciamento: Existe(m) débito(s) de Licenciamento até o presente momento. 
+21-Licença de Utilização Anual: Não existe(m) débito(s) de Licença de Utilização Anual até o presente momento. 
+22-IPVA: EM ATRASO. 
+23-Seguro Obrigatório (DPVAT): Não existe(m) débito(s) de Seguro Obrigatório até o presente momento. 
+24-Serviços do DETRAN: Não existe(m) débito(s) de Serviço(s) até o presente momento. 
+25-Parcelamento de Serviços do DETRAN: Não existe(m) débito(s) de Parcelamento de Serviço(s) até o presente momento. 
+26-Infrações: Não existe(m) débito(s) de Multa até o presente momento. 
+27-Recurso de Infrações: Não existem recursos de multas até o presente momento.
+
+
+
+0-Placa: nnx3801
+1-Regular: SIM / Placa: nnx3801
+2-Renavam: 
+3-Chassi: 
+4-Marca/Modelo: CLASSIC
+5-Cor: Preta
+6-Ano: 2003
+7-Fab/Modelo: 2003
+8-Tipo: 
+9-Combustível: FLEX
+10-Potência/Cilindradas: 
+11-Categoria: 
+12-Capacidade de Passageiros: 
+13-Espécie: 
+14-Nacionalidade: 
+15-Município: 
+16-Roubo/Furto: NAO
+17-Situação do Veículo: EM CIRCULACAO 
+18-Ano: 2006
+19-Licenciamento Restrição: ALIENACAO FIDUCIARIA 
+20-Licenciamento: Não existe(m) débito(s) de Licenciamento até o presente momento. 
+21-Licença de Utilização Anual: Não existe(m) débito(s) de Licença de Utilização Anual até o presente momento. 
+22-IPVA: A consulta e emissão dos débitos de IPVA só poderá ser feita através da Secretaria de Fazenda do Distrito Federal. 
+23-Seguro Obrigatório (DPVAT): Não existe(m) débito(s) de Seguro Obrigatório até o presente momento. 
+24-Serviços do DETRAN: Não existe(m) débito(s) de Serviço(s) até o presente momento. 
+25-Parcelamento de Serviços do DETRAN: Não existe(m) débito(s) de Parcelamento de Serviço(s) até o presente momento. 
+26-Infrações: Não existe(m) débito(s) de Multa até o presente momento. 
+27-Recurso de Infrações: Não existem recursos de multas até o presente momento.
+----------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
