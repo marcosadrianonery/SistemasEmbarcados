@@ -1,14 +1,16 @@
 # SistemasEmbarcados
 
-# Sobre a disciplina
+## Sobre a disciplina
 
-## Objetivos
+- Disciplina cursada no contexto de graduação em Engenharia Eletrônica.
+
+### Objetivos
 
 - Conhecer os fundamentos básicos de sistemas embarcados;
 - Compreender o processo de desenvolvimento de software para um sistema embarcado;
 - Conhecer as técnicas de desenvolvimento de aplicações e drivers para sistemas embarcados.
 
-## Ementa
+### Ementa
 
 - Introdução aos sistemas embarcados
 - Introdução ao OS Linux
